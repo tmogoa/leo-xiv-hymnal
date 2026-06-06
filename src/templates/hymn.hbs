@@ -1,0 +1,42 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{primaryTitle}}</title>
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <a href="../index.html">← Back</a>
+
+      <div class="hymn-header">
+        <h1>{{primaryTitle}}</h1>
+        <div class="translation-titles">
+          {{#each translations}}
+            <span class="lang-pill">{{lang}}: {{title}}</span>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="body">
+        {{#each sections}}
+          <div class="section {{type}}">
+            <div class="section-label">
+              {{type}}{{#if number}} {{number}}{{/if}}
+            </div>
+            <div class="translations">
+              {{#each lines}}
+                <div class="translation">
+                  <span class="lang-tag">{{lang}}</span>
+                  {{#each text}}
+                    <p>{{this}}</p>
+                  {{/each}}
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </body>
+</html>

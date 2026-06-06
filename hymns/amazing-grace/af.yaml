@@ -1,0 +1,24 @@
+title: Genade So Groot
+lang: af
+author: John Newton
+year: 1779
+
+body:
+  - type: verse
+    number: 1
+    lines:
+      - Genade so groot, hoe soet die klank
+      - Wat 'n ellendige soos ek gered het
+      - Ek was verlore, maar nou is ek gevind
+      - Was blind, maar nou kan ek sien
+
+  - type: verse
+    number: 2
+    lines:
+      - Dit was genade wat my hart leer vrees
+      - En genade het my vrese verlig
+
+  - type: chorus
+    lines:
+      - Prys God, prys God
+      - Prys God wat ons bevry
