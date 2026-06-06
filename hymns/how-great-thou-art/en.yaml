@@ -1,0 +1,18 @@
+title: How Great Thou Art
+lang: en
+author: Carl Boberg
+year: 1885
+
+body:
+  - type: verse
+    number: 1
+    lines:
+      - O Lord my God, when I in awesome wonder
+      - Consider all the worlds thy hands have made
+      - I see the stars, I hear the rolling thunder
+      - Thy power throughout the universe displayed
+
+  - type: chorus
+    lines:
+      - Then sings my soul, my Saviour God to thee
+      - How great thou art, how great thou art
