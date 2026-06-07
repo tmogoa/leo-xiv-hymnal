@@ -1,81 +1,145 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Genade So Groot</title>
-    <link rel="stylesheet" href="../assets/style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <a href="../index.html">← Back</a>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genade So Groot</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html">← Back</a>
 
-      <div class="hymn-header">
-        <h1>Genade So Groot</h1>
-        <div class="translation-titles">
-            <span class="lang-pill">af: Genade So Groot</span>
-            <span class="lang-pill">en: Amazing Grace</span>
-        </div>
-      </div>
-
-      <div class="body">
-          <div class="section verse">
-            <div class="section-label">
-              verse 1
-            </div>
-            <div class="translations">
-                <div class="translation">
-                  <span class="lang-tag">af</span>
-                    <p>Genade so groot, hoe soet die klank</p>
-                    <p>Wat &#x27;n ellendige soos ek gered het</p>
-                    <p>Ek was verlore, maar nou is ek gevind</p>
-                    <p>Was blind, maar nou kan ek sien</p>
-                </div>
-                <div class="translation">
-                  <span class="lang-tag">en</span>
-                    <p>Amazing grace, how sweet the sound</p>
-                    <p>That saved a wretch like me</p>
-                    <p>I once was lost, but now am found</p>
-                    <p>Was blind, but now I see</p>
-                </div>
-            </div>
-          </div>
-          <div class="section verse">
-            <div class="section-label">
-              verse 2
-            </div>
-            <div class="translations">
-                <div class="translation">
-                  <span class="lang-tag">af</span>
-                    <p>Dit was genade wat my hart leer vrees</p>
-                    <p>En genade het my vrese verlig</p>
-                </div>
-                <div class="translation">
-                  <span class="lang-tag">en</span>
-                    <p>T&#x27;was grace that taught my heart to fear</p>
-                    <p>And grace my fears relieved</p>
-                    <p>How precious did that grace appear</p>
-                    <p>The hour I first believed</p>
-                </div>
-            </div>
-          </div>
-          <div class="section chorus">
-            <div class="section-label">
-              chorus
-            </div>
-            <div class="translations">
-                <div class="translation">
-                  <span class="lang-tag">af</span>
-                    <p>Prys God, prys God</p>
-                    <p>Prys God wat ons bevry</p>
-                </div>
-                <div class="translation">
-                  <span class="lang-tag">en</span>
-                    <p>Praise God, praise God</p>
-                    <p>Praise God who sets us free</p>
-                </div>
-            </div>
-          </div>
+    <div class="hymn-header">
+      <h1>Genade So Groot</h1>
+      <div class="translation-titles">
+        <span class="lang-pill">af: Genade So Groot</span>
+        <span class="lang-pill">en: Amazing Grace</span>
       </div>
     </div>
-  </body>
+
+    <div class="lang-toggles" id="langToggles">
+      <button
+        class="lang-toggle"
+        data-lang="af"
+        aria-pressed="false"
+      >af</button>
+      <button
+        class="lang-toggle"
+        data-lang="en"
+        aria-pressed="false"
+      >en</button>
+    </div>
+
+    <div class="body">
+      <div class="section verse">
+        <div class="section-label">
+          verse 1
+        </div>
+        <div class="lines">
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af">Genade so groot, hoe soet die klank</span>
+            <span class="line lang-en" data-lang="en">Amazing grace, how sweet the sound</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af">Wat &#x27;n ellendige soos ek gered het</span>
+            <span class="line lang-en" data-lang="en">That saved a wretch like me</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af">Ek was verlore, maar nou is ek gevind</span>
+            <span class="line lang-en" data-lang="en">I once was lost, but now am found</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af">Was blind, maar nou kan ek sien</span>
+            <span class="line lang-en" data-lang="en">Was blind, but now I see</span>
+            <hr class="line-divider">
+          </div>
+        </div>
+      </div>
+      <div class="section verse">
+        <div class="section-label">
+          verse 2
+        </div>
+        <div class="lines">
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af">Dit was genade wat my hart leer vrees</span>
+            <span class="line lang-en" data-lang="en">T&#x27;was grace that taught my heart to fear</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af">En genade het my vrese verlig</span>
+            <span class="line lang-en" data-lang="en">And grace my fears relieved</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af"></span>
+            <span class="line lang-en" data-lang="en">How precious did that grace appear</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af"></span>
+            <span class="line lang-en" data-lang="en">The hour I first believed</span>
+            <hr class="line-divider">
+          </div>
+        </div>
+      </div>
+      <div class="section chorus">
+        <div class="section-label">
+          chorus
+        </div>
+        <div class="lines">
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af">Prys God, prys God</span>
+            <span class="line lang-en" data-lang="en">Praise God, praise God</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-af" data-lang="af">Prys God wat ons bevry</span>
+            <span class="line lang-en" data-lang="en">Praise God who sets us free</span>
+            <hr class="line-divider">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const primaryLang = "af";
+    const firstTranslationLang = "en";
+
+    // Track which two are currently active (order matters — oldest first)
+    const active = [primaryLang, firstTranslationLang].filter(Boolean);
+
+    function applyVisibility() {
+      document.querySelectorAll('.line').forEach(el => {
+        el.classList.toggle('hidden', !active.includes(el.dataset.lang));
+      });
+      document.querySelectorAll('.lang-toggle').forEach(btn => {
+        const on = active.includes(btn.dataset.lang);
+        btn.classList.toggle('active', on);
+        btn.setAttribute('aria-pressed', on);
+      });
+    }
+
+    document.querySelectorAll('.lang-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+
+        if (active.includes(lang)) {
+          if (active.length === 2) active.splice(active.indexOf(lang), 1);
+        } else {
+          if (active.length === 2) active.shift();
+          active.push(lang);
+        }
+
+        applyVisibility();
+      });
+    });
+
+    applyVisibility();
+  </script>
+</body>
 </html>

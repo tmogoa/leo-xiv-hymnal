@@ -1,49 +1,106 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>How Great Thou Art</title>
-    <link rel="stylesheet" href="../assets/style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <a href="../index.html">← Back</a>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Great Thou Art</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <a href="../index.html">← Back</a>
 
-      <div class="hymn-header">
-        <h1>How Great Thou Art</h1>
-        <div class="translation-titles">
-            <span class="lang-pill">en: How Great Thou Art</span>
-        </div>
-      </div>
-
-      <div class="body">
-          <div class="section verse">
-            <div class="section-label">
-              verse 1
-            </div>
-            <div class="translations">
-                <div class="translation">
-                  <span class="lang-tag">en</span>
-                    <p>O Lord my God, when I in awesome wonder</p>
-                    <p>Consider all the worlds thy hands have made</p>
-                    <p>I see the stars, I hear the rolling thunder</p>
-                    <p>Thy power throughout the universe displayed</p>
-                </div>
-            </div>
-          </div>
-          <div class="section chorus">
-            <div class="section-label">
-              chorus
-            </div>
-            <div class="translations">
-                <div class="translation">
-                  <span class="lang-tag">en</span>
-                    <p>Then sings my soul, my Saviour God to thee</p>
-                    <p>How great thou art, how great thou art</p>
-                </div>
-            </div>
-          </div>
+    <div class="hymn-header">
+      <h1>How Great Thou Art</h1>
+      <div class="translation-titles">
+        <span class="lang-pill">en: How Great Thou Art</span>
       </div>
     </div>
-  </body>
+
+    <div class="lang-toggles" id="langToggles">
+      <button
+        class="lang-toggle"
+        data-lang="en"
+        aria-pressed="false"
+      >en</button>
+    </div>
+
+    <div class="body">
+      <div class="section verse">
+        <div class="section-label">
+          verse 1
+        </div>
+        <div class="lines">
+          <div class="line-group">
+            <span class="line lang-en" data-lang="en">O Lord my God, when I in awesome wonder</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-en" data-lang="en">Consider all the worlds thy hands have made</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-en" data-lang="en">I see the stars, I hear the rolling thunder</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-en" data-lang="en">Thy power throughout the universe displayed</span>
+            <hr class="line-divider">
+          </div>
+        </div>
+      </div>
+      <div class="section chorus">
+        <div class="section-label">
+          chorus
+        </div>
+        <div class="lines">
+          <div class="line-group">
+            <span class="line lang-en" data-lang="en">Then sings my soul, my Saviour God to thee</span>
+            <hr class="line-divider">
+          </div>
+          <div class="line-group">
+            <span class="line lang-en" data-lang="en">How great thou art, how great thou art</span>
+            <hr class="line-divider">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const primaryLang = "en";
+    const firstTranslationLang = "";
+
+    // Track which two are currently active (order matters — oldest first)
+    const active = [primaryLang, firstTranslationLang].filter(Boolean);
+
+    function applyVisibility() {
+      document.querySelectorAll('.line').forEach(el => {
+        el.classList.toggle('hidden', !active.includes(el.dataset.lang));
+      });
+      document.querySelectorAll('.lang-toggle').forEach(btn => {
+        const on = active.includes(btn.dataset.lang);
+        btn.classList.toggle('active', on);
+        btn.setAttribute('aria-pressed', on);
+      });
+    }
+
+    document.querySelectorAll('.lang-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+
+        if (active.includes(lang)) {
+          if (active.length === 2) active.splice(active.indexOf(lang), 1);
+        } else {
+          if (active.length === 2) active.shift();
+          active.push(lang);
+        }
+
+        applyVisibility();
+      });
+    });
+
+    applyVisibility();
+  </script>
+</body>
 </html>
