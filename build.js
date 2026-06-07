@@ -4,9 +4,9 @@ const yaml = require('js-yaml');
 const Handlebars = require('handlebars');
 
 // ─── Directories ─────────────────────────────────────────────
-const hymnsDir     = path.join(__dirname, 'hymns');
-const distDir      = path.join(__dirname, 'dist');
-const distHymnsDir = path.join(distDir, 'hymns');
+const hymnsDir      = path.join(__dirname, 'hymns');
+const distDir       = path.join(__dirname, 'dist');
+const distHymnsDir  = path.join(distDir, 'hymns');
 const distAssetsDir = path.join(distDir, 'assets');
 
 fs.mkdirSync(distHymnsDir,  { recursive: true });
@@ -25,15 +25,23 @@ const hymns = {};
 
 for (const hymnId of hymnFolders) {
   const hymnPath = path.join(hymnsDir, hymnId);
-  const langFiles = fs.readdirSync(hymnPath).filter(f => f.endsWith('.yaml'));
+  const langFiles = fs.readdirSync(hymnPath).filter(f =>
+    f.endsWith('.yaml') && f !== 'meta.yaml'
+  );
 
   if (langFiles.length === 0) continue;
 
-  hymns[hymnId] = {};
+  // Load meta.yaml if it exists
+  const metaPath = path.join(hymnPath, 'meta.yaml');
+  const meta = fs.existsSync(metaPath)
+    ? yaml.load(fs.readFileSync(metaPath, 'utf8'))
+    : {};
+
+  hymns[hymnId] = { _meta: meta };
 
   for (const langFile of langFiles) {
-    const lang = path.basename(langFile, '.yaml');
-    const raw  = fs.readFileSync(path.join(hymnPath, langFile), 'utf8');
+    const lang   = path.basename(langFile, '.yaml');
+    const raw    = fs.readFileSync(path.join(hymnPath, langFile), 'utf8');
     const parsed = yaml.load(raw);
     hymns[hymnId][lang] = { ...parsed, lang };
   }
@@ -49,21 +57,36 @@ const indexTemplate = Handlebars.compile(
 
 // ─── Build hymn pages ─────────────────────────────────────────
 for (const [id, translations] of Object.entries(hymns)) {
-  const langs   = Object.keys(translations);
-  const primary = translations[langs[0]];
+  const meta  = translations._meta || {};
+  const langs = Object.keys(translations).filter(k => k !== '_meta');
 
+  // Determine primary language
+  const primaryLang = meta.original_lang && langs.includes(meta.original_lang)
+    ? meta.original_lang
+    : langs[0];
+
+  // Order languages: primary first, rest after
+  const orderedLangs = [
+    primaryLang,
+    ...langs.filter(l => l !== primaryLang)
+  ];
+
+  const primary             = translations[primaryLang];
+  const firstTranslationLang = orderedLangs[1] || null;
+
+  // Use primary language body as the section structure
   const sectionTypes = primary.body.map((s, i) => ({
     type: s.type, number: s.number, index: i
   }));
 
   const sections = sectionTypes.map(({ type, number, index }) => {
-    const maxLines = Math.max(...langs.map(lang => {
+    const maxLines = Math.max(...orderedLangs.map(lang => {
       const section = translations[lang].body[index];
       return section ? section.lines.length : 0;
     }));
 
     const rows = Array.from({ length: maxLines }, (_, i) => ({
-      translations: langs.map(lang => {
+      translations: orderedLangs.map(lang => {
         const section = translations[lang].body[index];
         return {
           lang,
@@ -77,10 +100,10 @@ for (const [id, translations] of Object.entries(hymns)) {
 
   const context = {
     id,
-    primaryTitle:        primary.title,
-    primaryLang:         langs[0],
-    firstTranslationLang: langs[1] || null,
-    translations: langs.map(lang => ({
+    primaryTitle:         primary.title,
+    primaryLang,
+    firstTranslationLang,
+    translations: orderedLangs.map(lang => ({
       lang,
       title: translations[lang].title
     })),
@@ -95,11 +118,22 @@ for (const [id, translations] of Object.entries(hymns)) {
 // ─── Build index page ─────────────────────────────────────────
 const indexContext = {
   hymns: Object.entries(hymns).map(([id, translations]) => {
-    const langs = Object.keys(translations);
+    const meta  = translations._meta || {};
+    const langs = Object.keys(translations).filter(k => k !== '_meta');
+
+    const primaryLang = meta.original_lang && langs.includes(meta.original_lang)
+      ? meta.original_lang
+      : langs[0];
+
+    const orderedLangs = [
+      primaryLang,
+      ...langs.filter(l => l !== primaryLang)
+    ];
+
     return {
       id,
-      primaryTitle: translations[langs[0]].title,
-      langs: langs.join(', ')
+      primaryTitle: translations[primaryLang].title,
+      langs: orderedLangs.join(', ')
     };
   })
 };

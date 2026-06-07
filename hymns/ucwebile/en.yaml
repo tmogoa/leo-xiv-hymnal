@@ -1,0 +1,27 @@
+title: Holy Holy Holy (Sanctus)
+lang: en
+
+body:
+  - type: verse
+    number: 1
+    lines:
+      - Holy, holy, holy Lord God of hosts
+      - You who love us
+      - You who sustain all things
+      - Look upon us with kindness
+
+  - type: verse
+    number: 2
+    lines:
+      - Raise us up by your grace
+      - We who are your people
+      - On the day we depart this world
+      - Receive us Father
+
+  - type: verse
+    number: 3
+    lines:
+      - That we may rejoice forever
+      - In your kingdom above
+      - Praising you and giving thanks
+      - Together with all the angels
