@@ -1,21 +1,22 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Leo XIV Hymnal</title>
-    <link rel="stylesheet" href="assets/style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1>Leo XIV Hymnal</h1>
-      <ul class="hymn-list">
-        {{#each hymns}}
-          <li>
-            <a href="hymns/{{id}}.html">{{primaryTitle}}</a>
-            <span>({{langs}})</span>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leo XIV Hymnal</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Leo XIV Hymnal</h1>
+    <ul class="hymn-list">
+      {{#each hymns}}
+      <li>
+        <a href="hymns/{{id}}.html">{{primaryTitle}}</a>
+        <span class="langs">{{langs}}</span>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</body>
 </html>

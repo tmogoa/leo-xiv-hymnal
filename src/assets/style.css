@@ -48,16 +48,12 @@ a:hover { text-decoration: none; }
 /* ─── Hymn page header ─────────────────────────────────────── */
 .hymn-header {
   margin-bottom: 2rem;
+  margin-top: 1rem;
 }
 
 .hymn-header h1 {
   font-size: 2rem;
   margin: 0.5rem 0;
-}
-
-.hymn-header .meta {
-  font-size: 0.85rem;
-  color: #888;
 }
 
 .translation-titles {
@@ -67,7 +63,7 @@ a:hover { text-decoration: none; }
   flex-wrap: wrap;
 }
 
-.translation-titles .lang-pill {
+.lang-pill {
   background: #ede8e0;
   border-radius: 999px;
   padding: 0.2rem 0.75rem;
@@ -75,7 +71,34 @@ a:hover { text-decoration: none; }
   font-family: monospace;
 }
 
-/* ─── Sections (verse, chorus, bridge) ─────────────────────── */
+/* ─── Language toggles ──────────────────────────────────────── */
+.lang-toggles {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.lang-toggle {
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid #c0b8ae;
+  background: #fff;
+  font-family: monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #aaa;
+  transition: all 0.15s ease;
+}
+
+.lang-toggle.active {
+  background: #5a3e2b;
+  border-color: #5a3e2b;
+  color: #fff;
+}
+
+/* ─── Sections ──────────────────────────────────────────────── */
 .section {
   margin-bottom: 2rem;
 }
@@ -91,33 +114,30 @@ a:hover { text-decoration: none; }
 .section.chorus .section-label { color: #7a5c3a; }
 .section.bridge .section-label { color: #3a5c7a; }
 
-/* ─── Translation columns ──────────────────────────────────── */
-.translations {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
+/* ─── Line-by-line display ──────────────────────────────────── */
+.line-group {
+  margin-bottom: 0.75rem;
 }
 
-.translation {
-  background: #fff;
-  border: 1px solid #e0dbd4;
-  border-radius: 6px;
-  padding: 1rem;
-}
-
-.section.chorus .translation { border-left: 3px solid #7a5c3a; }
-.section.bridge .translation { border-left: 3px solid #3a5c7a; }
-
-.lang-tag {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-family: monospace;
-  text-transform: uppercase;
-  color: #aaa;
-  margin-bottom: 0.4rem;
-}
-
-.translation p {
-  margin: 0;
+.line {
+  display: block;
   font-size: 1rem;
+  line-height: 1.5;
 }
+
+.line:first-child {
+  font-weight: 500;
+}
+
+.line.hidden {
+  display: none;
+}
+
+.line-divider {
+  border: none;
+  border-top: 1px solid #f0ece6;
+  margin: 0.75rem 0 0;
+}
+
+.section.chorus .line { font-style: italic; }
+.section.bridge .line { color: #3a5c7a; }

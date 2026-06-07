@@ -1,81 +1,90 @@
-const fs = require("fs");
-const path = require("path");
-const yaml = require("js-yaml");
-const Handlebars = require("handlebars");
+const fs = require('fs');
+const path = require('path');
+const yaml = require('js-yaml');
+const Handlebars = require('handlebars');
 
-const hymnsDir = path.join(__dirname, "hymns");
-const distDir = path.join(__dirname, "dist");
-const distHymnsDir = path.join(distDir, "hymns");
-
-fs.mkdirSync(distHymnsDir, { recursive: true });
-// Copy assets
+// ─── Directories ─────────────────────────────────────────────
+const hymnsDir     = path.join(__dirname, 'hymns');
+const distDir      = path.join(__dirname, 'dist');
+const distHymnsDir = path.join(distDir, 'hymns');
 const distAssetsDir = path.join(distDir, 'assets');
+
+fs.mkdirSync(distHymnsDir,  { recursive: true });
 fs.mkdirSync(distAssetsDir, { recursive: true });
+
+// Copy assets
 fs.copyFileSync('src/assets/style.css', path.join(distAssetsDir, 'style.css'));
 
-const isDir = (f) => {
-  return fs.statSync(path.join(hymnsDir, f)).isDirectory();
-};
+// ─── Scan hymn folders ───────────────────────────────────────
+const hymnFolders = fs.readdirSync(hymnsDir).filter(f =>
+  fs.statSync(path.join(hymnsDir, f)).isDirectory()
+);
 
-const hymnFolders = fs.readdirSync(hymnsDir).filter(isDir);
-
+// ─── Parse YAML files ────────────────────────────────────────
 const hymns = {};
 
 for (const hymnId of hymnFolders) {
   const hymnPath = path.join(hymnsDir, hymnId);
-  const langFiles = fs.readdirSync(hymnPath).filter((f) => f.endsWith(".yaml"));
+  const langFiles = fs.readdirSync(hymnPath).filter(f => f.endsWith('.yaml'));
 
   if (langFiles.length === 0) continue;
 
   hymns[hymnId] = {};
 
   for (const langFile of langFiles) {
-    const lang = path.basename(langFile, ".yaml");
-    const raw = fs.readFileSync(path.join(hymnPath, langFile), "utf8");
+    const lang = path.basename(langFile, '.yaml');
+    const raw  = fs.readFileSync(path.join(hymnPath, langFile), 'utf8');
     const parsed = yaml.load(raw);
     hymns[hymnId][lang] = { ...parsed, lang };
   }
 }
 
+// ─── Load templates ──────────────────────────────────────────
 const hymnTemplate = Handlebars.compile(
-  fs.readFileSync("src/templates/hymn.hbs", "utf8"),
+  fs.readFileSync('src/templates/hymn.hbs', 'utf8')
 );
-
 const indexTemplate = Handlebars.compile(
-  fs.readFileSync("src/templates/index.hbs", "utf8"),
+  fs.readFileSync('src/templates/index.hbs', 'utf8')
 );
 
+// ─── Build hymn pages ─────────────────────────────────────────
 for (const [id, translations] of Object.entries(hymns)) {
-  const langs = Object.keys(translations);
+  const langs   = Object.keys(translations);
   const primary = translations[langs[0]];
 
   const sectionTypes = primary.body.map((s, i) => ({
-    type: s.type,
-    number: s.number,
-    index: i,
+    type: s.type, number: s.number, index: i
   }));
 
-  // For each section, gather lines from all translations
-  const sections = sectionTypes.map(({ type, number, index }) => ({
-    type,
-    number,
-    lines: langs
-      .map((lang) => {
+  const sections = sectionTypes.map(({ type, number, index }) => {
+    const maxLines = Math.max(...langs.map(lang => {
+      const section = translations[lang].body[index];
+      return section ? section.lines.length : 0;
+    }));
+
+    const rows = Array.from({ length: maxLines }, (_, i) => ({
+      translations: langs.map(lang => {
         const section = translations[lang].body[index];
-        if (!section) return null;
-        return { lang, text: section.lines };
+        return {
+          lang,
+          text: section && section.lines[i] ? section.lines[i] : ''
+        };
       })
-      .filter(Boolean),
-  }));
+    }));
+
+    return { type, number, rows };
+  });
 
   const context = {
     id,
-    primaryTitle: primary.title,
-    translations: langs.map((lang) => ({
+    primaryTitle:        primary.title,
+    primaryLang:         langs[0],
+    firstTranslationLang: langs[1] || null,
+    translations: langs.map(lang => ({
       lang,
-      title: translations[lang].title,
+      title: translations[lang].title
     })),
-    sections,
+    sections
   };
 
   const html = hymnTemplate(context);
@@ -83,19 +92,17 @@ for (const [id, translations] of Object.entries(hymns)) {
   console.log(`✓ Built hymns/${id}.html`);
 }
 
+// ─── Build index page ─────────────────────────────────────────
 const indexContext = {
   hymns: Object.entries(hymns).map(([id, translations]) => {
     const langs = Object.keys(translations);
     return {
       id,
       primaryTitle: translations[langs[0]].title,
-      langs: langs.join(", "),
+      langs: langs.join(', ')
     };
-  }),
+  })
 };
 
-const indexHtml = indexTemplate(indexContext);
-fs.writeFileSync(path.join(distDir, 'index.html'), indexHtml);
-console.log('✓ Built index.html');
-
-console.log("\nBuild complete.");
+fs.writeFileSync(path.join(distDir, 'index.html'), indexTemplate(indexContext));
+console.log('✓ Built index.html\n\nBuild complete.');

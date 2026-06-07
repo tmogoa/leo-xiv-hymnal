@@ -1,0 +1,60 @@
+title: Kabelo ea ka e ntle
+lang: st
+author: Unknown
+hymn_number: 25
+
+body:
+  - type: verse
+    number: 1
+    lines:
+      - Kabelo ea ka e ntle
+      - Ka letsatsi lena
+      - Ke ikhethetse ha ntle
+      - Ke nkile Morena
+
+  - type: chorus
+    lines:
+      - "Oho! Morena ea mosa"
+      - Ke u neha pelo
+      - Lentsoe la ka ke lena
+      - "Jesu! Jesu! Jesu!"
+
+  - type: verse
+    number: 2
+    lines:
+      - E ke lehlohonolo
+      - Jesu o ka ho 'na
+      - "'Me a se le ka thabo"
+      - A se le ka mosa
+
+  - type: verse
+    number: 3
+    lines:
+      - "Na ke tla leboha joang!"
+      - "Ke tla reng kajeno!"
+      - Ke taba e makatsang
+      - E entsoeng ke Jesu
+
+  - type: verse
+    number: 4
+    lines:
+      - "Morena oa ka a re:"
+      - Tlo, o lule ho 'na
+      - "Ka arabela ka re:"
+      - "Jesu, ke 'na enoa"
+
+  - type: verse
+    number: 5
+    lines:
+      - E ke taba ea 'nete
+      - "Hase 'na ea phelang"
+      - "Che! Ke eena 'Moloki"
+      - Ke eena mphelisang
+
+  - type: verse
+    number: 6
+    lines:
+      - "Lula hle! Moren'a ka"
+      - U lule ka ho 'na
+      - Ho phele uena feela
+      - Ka sefubeng sa ka
