@@ -1,0 +1,20 @@
+title: Aletareng
+lang: st
+hymn_number: 4
+source: Lifela tsa Bakriste
+
+body:
+  - type: verse
+    number: 1
+    lines:
+      - Aletareng ho tla phethoa
+      - Hlabelo sa Kalvari
+      - Tlong re fumaneng grasia
+      - Ka mali a 'Moloki
+
+  - type: chorus
+    lines:
+      - Morena re ipolela
+      - Libe tsohle tsa rona
+      - Re nehe soabo ea 'nete
+      - Li tla hlakoha ruri
